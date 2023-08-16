@@ -14,7 +14,7 @@ namespace E_Commerce_Console_App.Services
         {
             _httpClient = new HttpClient();
         }
-        public async Task<Message> CreateProductAsync(Product product)
+        public async Task<Message> CreateProductAsync(AddProduct product)
         {
             var content = JsonConvert.SerializeObject(product);
             var bodyContent = new StringContent(content, Encoding.UTF8,"application/json");
@@ -65,11 +65,11 @@ namespace E_Commerce_Console_App.Services
             throw new NotImplementedException();
         }
 
-        public async Task<Message> UpdateProductAsync(UpdateProduct product)
+        public async Task<Message> UpdateProductAsync(Product product)
         {
             var content = JsonConvert.SerializeObject(product);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync(_url + "/" + product.Id,bodyContent);
+            var response = await _httpClient.PutAsync(_url + "/" + product.Id, bodyContent);
             if (response.IsSuccessStatusCode)
             {
                 return new Message { InfoMessage = "Product updated successfully" };
