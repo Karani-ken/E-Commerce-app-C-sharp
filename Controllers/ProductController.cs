@@ -11,7 +11,7 @@ namespace E_Commerce_Console_App.Controllers
         ProductService productService = new ProductService();
         public async static Task Initialize()
         {
-            Console.WriteLine("Welcome to Naivas Console Admin Panel. Select an option. " +
+            Console.WriteLine("Welcome to Naivas Console Products Panel. Select an option. " +
                 "\n 1. Add a product.\n 2.View Products\n 3.Edit a product\n 4.Delete a Product.");
 
             var input = Console.ReadLine();

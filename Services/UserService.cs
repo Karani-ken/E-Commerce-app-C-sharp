@@ -11,26 +11,56 @@ namespace E_Commerce_Console_App.Services
 {
     public class UserService : IUserInterface
     {
-        public Task<Message> AddUserAsync(AddUsers user)
+        private readonly HttpClient _httpClient;
+        private readonly string _url = "http://localhost:3000/users";
+
+        public UserService()
+        {
+            _httpClient = new HttpClient();
+        }
+        public async Task<Message> AddUserAsync(AddUsers user)
         {
             var content = JsonConvert.SerializeObject(user);
             var bodyContent = new StringContent(content, Encoding.UTF8,"application/json");
-            throw new NotImplementedException();
+            var response = await _httpClient.PostAsync(_url, bodyContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return new Message { InfoMessage = "User Added successfully" };
+            }
+            throw new Exception("User not Added");
         }
 
-        public Task<List<Users>> GetAllUsersAsync()
+        public async Task<List<Users>> GetAllUsersAsync()
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync(_url);
+            var Users = JsonConvert.DeserializeObject<List<Users>>(await response.Content.ReadAsStringAsync());
+            if (response.IsSuccessStatusCode)
+            {
+                return Users;
+            }
+            throw new Exception("Could fetch Users");
         }
 
-        public Task<Message> RemoveUserAsync(string id)
+        public async Task<Message> RemoveUserAsync(string id)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.DeleteAsync(_url + "/"+id);
+            if (response.IsSuccessStatusCode)
+            {
+                return new Message { InfoMessage = "User deleted successfully" };
+            }
+            throw new Exception("Could not delete user");
         }
 
-        public Task<Message> UpdateUserAsync(Users user)
+        public async Task<Message> UpdateUserAsync(Users user)
         {
-            throw new NotImplementedException();
+            var content = JsonConvert.SerializeObject(user);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(_url + "/" + user.Id,bodyContent);
+            if(response.IsSuccessStatusCode)
+            {
+                return new Message { InfoMessage = "User info Updated" };
+            }
+            throw new Exception("User Info failed to update");
         }
     }
 }
