@@ -10,6 +10,7 @@ namespace E_Commerce_Console_App.Services
     {
         private readonly HttpClient _httpClient;
         private readonly string _url = "http://localhost:3000/products";
+        private readonly string _url2 = "http://localhost:3000/purchases";
         public ProductService()
         {
             _httpClient = new HttpClient();
@@ -60,9 +61,17 @@ namespace E_Commerce_Console_App.Services
             throw new Exception("Could not fetch product");
         }
 
-        public Task<Message> PurchaseProductAsync(string id)
+        public async Task<Message> PurchaseProductAsync(Purchases purchase)
         {
-            throw new NotImplementedException();
+            var content = JsonConvert.SerializeObject(purchase);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(_url2, bodyContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return new Message { InfoMessage = "Product Purchased successfull" };
+            }
+
+            throw new Exception("Could not purchase product");
         }
 
         public async Task<Message> UpdateProductAsync(Product product)
@@ -76,6 +85,18 @@ namespace E_Commerce_Console_App.Services
             }
 
             throw new Exception("Product not updated");
+        }
+
+        public async Task<List<Purchases>> GetAllPurchasesAsync()
+        {
+           var response = await _httpClient.GetAsync(_url2);
+            var purchases = JsonConvert.DeserializeObject<List<Purchases>>(await response.Content.ReadAsStringAsync());
+            if (response.IsSuccessStatusCode)
+            {
+                return purchases;
+            }
+
+            throw new Exception("You have no Purchases yet");
         }
     }
 }

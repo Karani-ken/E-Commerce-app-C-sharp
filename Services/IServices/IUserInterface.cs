@@ -13,5 +13,9 @@ namespace E_Commerce_Console_App.Services.IServices
         Task<List<Users>> GetAllUsersAsync();
         //remove a user
         Task<Message> RemoveUserAsync(string id);
+        //get user by role
+        Task<Users> GetUserByRole(string id);
+        //get user by Id
+        Task<Users> GetUserById(string id);
     }
 }

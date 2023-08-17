@@ -9,45 +9,9 @@ namespace E_Commerce_Console_App.Controllers
     {
 
         ProductService productService = new ProductService();
-        public async static Task Initialize()
-        {
-            Console.WriteLine("Welcome to Naivas Console Products Panel. Select an option. " +
-                "\n 1. Add a product.\n 2.View Products\n 3.Edit a product\n 4.Delete a Product.");
-
-            var input = Console.ReadLine();
-            var ValidateResult = Validator.Validation(new List<string> {input});
-            if (!ValidateResult)
-            {
-                await ProductController.Initialize();
-            }
-            else
-            {
-                await new ProductController().Menus(input);
-            }
-        }
-
-        public async Task Menus(string Id)
-        {
-            switch(Id)
-            {
-                case "1":
-                    await AddnewProduct();
-                    break;
-                case "2":
-                    await ViewProducts();
-                    break;
-                case "3":
-                    await UpdateProduct();
-                    break;
-                case "4":
-                    await DeleteProduct();
-                    break;
-                default:
-                    ProductController.Initialize();
-                    break;
-            }
-        }
-        public async Task AddnewProduct()
+        UserService userService = new UserService();
+             
+        public async Task AddnewProduct(string userId)
         {
             Console.WriteLine("Enter the product details:");
             
@@ -59,19 +23,24 @@ namespace E_Commerce_Console_App.Controllers
             var productCategory = Console.ReadLine();
             Console.WriteLine("Price:");
             var productPrice = Console.ReadLine();
-
+            var user = await userService.GetUserById(userId);
             var newProduct = new AddProduct()
             {
                 ProductName = productName,
                 Description=productDescription,
                 Category=productCategory,
-                Price=productPrice
+                Price=productPrice,
+                Seller = new Users()
+                {
+                    Username=user.Username,
+                    Id=user.Id
+                }
             };
             var res = await productService.CreateProductAsync(newProduct);
             await Console.Out.WriteLineAsync(res.InfoMessage);
         }
-        public async Task ViewProducts()
-        {
+        public async Task ViewProducts()        {
+            
             try
             {
                 var products = await productService.GetAllProductAsync();
@@ -83,7 +52,7 @@ namespace E_Commerce_Console_App.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-
+           
         }
         public async Task UpdateProduct()
         {
@@ -130,6 +99,51 @@ namespace E_Commerce_Console_App.Controllers
                 Console.WriteLine(ex.Message);
             }
           
+        }
+        public async Task PurchaseProduct(string Product_id,string userId)
+        {
+
+            var product = await productService.GetProductAsync(Product_id);
+            var user = await userService.GetUserById(userId);
+
+            var newPurchase = new Purchases()
+            {
+                Product = product,
+                users = new Users () {
+                   Username = user.Username,
+                    Id = user.Id
+                }
+
+            };
+            try
+            {
+                var res = await productService.PurchaseProductAsync(newPurchase);
+                await Console.Out.WriteLineAsync(res.InfoMessage);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+
+        }
+        public async Task PurchaseHistory(string userId)
+        {
+            try
+            {
+                var Purchases = await productService.GetAllPurchasesAsync();
+                var myPurchases = Purchases.FindAll(x => x.users.Id.Contains(userId));
+                await Console.Out.WriteLineAsync("My purchase History");
+                foreach (var  purchase in myPurchases)
+                {
+                    await Console.Out.WriteLineAsync($"{purchase.Product.Id}.{purchase.Product.ProductName}\t{purchase.Product.ProductName}\t" +
+                        $"{purchase.users.Username}");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Console.Out.WriteLineAsync(ex.Message);
+            }
         }
     }
 }

@@ -12,5 +12,6 @@ namespace E_Commerce_Console_App.Models
         public string Description { get; set; } = string.Empty;
         public string Category { get; set; } = string.Empty;
         public string Price { get; set; } = string.Empty;
+        public Users Seller { get; set; }
     }
 }

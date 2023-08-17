@@ -1,0 +1,111 @@
+{
+  "Account": [
+
+  ],
+  "purchases": [
+    {
+      "Product": {
+        "Id": "1",
+        "ProductName": "P47 Headphones",
+        "Description": "Best sounds",
+        "Category": "Electronics",
+        "Price": "500"
+      },
+      "users": {
+        "Id": "2",
+        "Username": "Jimmy Falon",
+        "Password": "",
+        "Email": "",
+        "Roles": 0
+      },
+      "id": 1
+    },
+    {
+      "Product": {
+        "Id": "4",
+        "ProductName": "Home theater LG",
+        "Description": "25watts quality sound",
+        "Category": "electronics",
+        "Price": "5700"
+      },
+      "users": {
+        "Id": "2",
+        "Username": "Jimmy Falon",
+        "Password": "",
+        "Email": "",
+        "Roles": 0
+      },
+      "id": 2
+    }
+  ],
+  "users": [
+    {
+      "Id": "1",
+      "Username": "karani",
+      "Password": "ken123",
+      "Email": "ken@ken.com",
+      "Roles": 3,
+      "id": 1
+    },
+    {
+      "Id": "2",
+      "Username": "Jimmy Falon",
+      "Password": "jim123",
+      "Email": "jim@2jim.com",
+      "Roles": 2,
+      "id": 2
+    },
+    {
+      "Username": "Admin",
+      "Password": "admin@123",
+      "Email": "admin@admin.com",
+      "Roles": 1,
+      "id": 3
+    },
+    {
+      "Username": "Arthur",
+      "Password": "art123",
+      "Email": "art@art.com",
+      "Roles": 3,
+      "id": 4
+    },
+    {
+      "Username": "Yvonne",
+      "Password": "shei123",
+      "Email": "sheila@yvonne.com",
+      "Roles": 3,
+      "id": 5
+    }
+  ],
+  "products": [
+    {
+      "ProductName": "P47 Headphones",
+      "Description": "Best sounds",
+      "Category": "Electronics",
+      "Price": "500",
+      "id": 1
+    },
+    {
+      "ProductName": "Water Glass",
+      "Description": "1/4ltr glass capacity",
+      "Category": "Kitchen ware",
+      "Price": "250 per piece",
+      "id": 2
+    },
+    {
+      "Id": "3",
+      "ProductName": "Infinix note 3",
+      "Description": "2Gb + 32Gb",
+      "Category": "phones",
+      "Price": "12599",
+      "id": 3
+    },
+    {
+      "ProductName": "Home theater LG",
+      "Description": "25watts quality sound",
+      "Category": "electronics",
+      "Price": "5700",
+      "id": 4
+    }
+  ]
+}

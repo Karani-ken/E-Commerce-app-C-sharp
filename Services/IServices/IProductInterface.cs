@@ -16,6 +16,9 @@ namespace E_Commerce_Console_App.Services.IServices
         //Delete a product
         Task<Message>DeleteProductAsync(string id);
         //Purchase product
-        Task<Message>PurchaseProductAsync(string id);
+        Task<Message>PurchaseProductAsync(Purchases purchase);
+        //get all purchases
+        Task<List<Purchases>> GetAllPurchasesAsync();
+        
     }
 }

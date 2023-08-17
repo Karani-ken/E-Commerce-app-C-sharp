@@ -5,6 +5,8 @@ class program
 {
     public async static Task Main()
     {
-        await ProductController.Initialize();
+        //await ProductController.Initialize();
+        //await UserController.Initialize();
+        await LoginController.Initial();
     }
 }

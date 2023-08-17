@@ -23,5 +23,23 @@ namespace E_Commerce_Console_App.Helpers
 
             return IsValid;
         }
+        public bool DetailsChecker(string username,string password1, string password2,string email)
+        {
+            var isValid = false;
+            if(username == null || password1 == null || password2 == null || email == null)
+            {
+                Console.WriteLine("Please Enter all the fields");
+                isValid = false;
+            }else if(password1 != password2)
+            {
+                Console.WriteLine("Password do not match");
+                isValid=false;
+            }
+            else
+            {
+                isValid=true;
+            }
+            return isValid;
+        }
     }
 }

@@ -62,5 +62,26 @@ namespace E_Commerce_Console_App.Services
             }
             throw new Exception("User Info failed to update");
         }
+
+        public async Task<Users> GetUserByRole(string id)
+        {
+            var response = await _httpClient.GetAsync(_url + "/" + id);
+            var user = JsonConvert.DeserializeObject<Users>(await response.Content.ReadAsStringAsync());
+            if (response.IsSuccessStatusCode)
+            {
+                return user;
+            }
+            throw new Exception("Could not fetch user");
+        }
+        public async Task<Users> GetUserById(string id)
+        {
+            var response = await _httpClient.GetAsync(_url + "/" + id);
+            var user = JsonConvert.DeserializeObject<Users>(await response.Content.ReadAsStringAsync());
+            if (response.IsSuccessStatusCode)
+            {
+                return user;
+            }
+            throw new Exception("Could not fetch user");
+        }
     }
 }
